@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Pago por medio de sdk Node.js
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,172 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
+      <ion-title size="large">Sdk node.js</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <form #formulario = "ngForm" (ngSubmit)="EpaycoSdk()"> 
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Datos de facturación</ion-card-title>
+        <ion-card-subtitle>Ingrese los datos del cliente</ion-card-subtitle>
+      </ion-card-header>
+
+      <!-- Formulario de datos cliente pagador -->
+      <ion-card-content>
+      <ion-grid>
+        <ion-row class="ion-align-items-start">
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Nombres</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.nombres" name="nombres" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Apellidos</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.apellidos" name="apellidos" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-list>
+              <ion-label>Tipo de documento</ion-label>
+                <ion-select placeholder="Seleccione uno" required>
+                  <ion-select-option *ngFor="let item of tipodedocumento" [value]="item" >{{item}}</ion-select-option>
+                  
+                  <!-- <ion-select-option [(ngModel)]="datos_pagos_tc.tipodedocumento" name="tipodedocumento" value="CC">CC :: CÉDULA DE CIUDADANÍA</ion-select-option>
+                  <ion-select-option [(ngModel)]="datos_pagos_tc.tipodedocumento" name="tipodedocumento" value="CE">CE :: CÉDULA DE EXTRANJERÍA</ion-select-option>
+                  <ion-select-option [(ngModel)]="datos_pagos_tc.tipodedocumento" name="tipodedocumento" value="PPN">PPN :: PASAPORTE</ion-select-option>
+                  <ion-select-option [(ngModel)]="datos_pagos_tc.tipodedocumento" name="tipodedocumento" value="SSN">SSN :: NÚMERO DE SEGURIDAD SOCIAL</ion-select-option>
+                  <ion-select-option [(ngModel)]="datos_pagos_tc.tipodedocumento" name="tipodedocumento" value="LIC">LIC :: LICENCIA DE CONDUCCIÓN</ion-select-option>
+                  <ion-select-option [(ngModel)]="datos_pagos_tc.tipodedocumento" name="tipodedocumento" value="NIT">NIT :: NÚMERO DE INDENTIFICACIÓN TRIBUTARIA</ion-select-option>
+                  <ion-select-option [(ngModel)]="datos_pagos_tc.tipodedocumento" name="tipodedocumento" value="TI">TI :: TARJETA DE IDENTIDAD</ion-select-option>
+                  <ion-select-option [(ngModel)]="datos_pagos_tc.tipodedocumento" name="tipodedocumento" value="DNI">DNI :: DOCUMENTO NACIONAL DE IDENTIFICACIÓN</ion-select-option>
+                 -->
+                </ion-select>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Número de documento</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.numerodedocumento" name="numerodedocumento" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Teléfono</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.telefono" name="telefono" clearInput type="number" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Celular</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.celular" name="celular" clearInput type="number" required></ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Dirección</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.direccion" name="direccion" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Ciudad</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.ciudad" name="ciudad" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Correo electrónico</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.correoelectronico" name="correoelectronico" clearInput type="email" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Valor a pagar</ion-label>
+              <ion-input [(ngModel)]="datos_pagos_tc.valor_a_pagar" name="valor_a_pagar" clearInput type="number" required></ion-input>
+            </ion-item>
+          </ion-col>
+
+        </ion-row>
+    
+      </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Datos de la tarjeta de crédito</ion-card-title>
+        <ion-card-subtitle>Recuerde ingresar los datos del titular de la tarjeta de crédito</ion-card-subtitle>
+      </ion-card-header>
+
+      <!-- Formulario de tarjeta de credito -->
+      <ion-card-content>
+        <ion-grid>
+          <ion-row class="ion-align-items-start">
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Nombre del tarjeta habiente</ion-label>
+                <ion-input [(ngModel)]="datos_pagos_tc.nombretitulartarjeta" name="nombretitulartarjeta" required></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Número de la tarjeta</ion-label>
+                <ion-input [(ngModel)]="datos_pagos_tc.numerotarjetatc" name="numerotarjetatc" clearInput type="number" required></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Mes de expiración</ion-label>
+                <ion-input [(ngModel)]="datos_pagos_tc.mes_expiracion" name="mes_expiracion" clearInput type="number" required></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Año de expiración</ion-label>
+                <ion-input [(ngModel)]="datos_pagos_tc.ano_expiracion" name="ano_expiracion" clearInput type="number" required></ion-input>
+              </ion-item>
+            </ion-col>
+            
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">CVC</ion-label>
+                <ion-input [(ngModel)]="datos_pagos_tc.cvc_tc" name="cvc_tc" clearInput type="number" required></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Cuotas</ion-label>
+                <ion-input [(ngModel)]="datos_pagos_tc.cuotas" name="cuotas" clearInput type="number" required></ion-input>
+              </ion-item>
+            </ion-col>
+            
+          </ion-row>
+
+          <!-- Boton de pagar -->
+          <ion-button expand="block" shape="round" color="success" position="center" [disabled]="formulario.invalid" (click)="EpaycoSdk()">Pagar con epayco</ion-button>
+      
+        </ion-grid>
+      </ion-card-content>
+    
+    </ion-card>
+  </form>
 
   <app-explore-container name="Tab 3 page"></app-explore-container>
 </ion-content>

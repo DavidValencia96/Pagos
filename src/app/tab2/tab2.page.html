@@ -1,17 +1,94 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title> Checkout Handler JS </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large">Datos checkout</ion-title>
     </ion-toolbar>
   </ion-header>
 
+  <br/>
+  
+  <form #formulario="ngForm" (ngSubmit)="epayco()">
+    <ion-title position="center">Datos cliente</ion-title>
+    <br/>
+    <ion-item>
+      <ion-label position="floating">Nombres cliente</ion-label>
+      <ion-input clearInput [(ngModel)]="datos_pagos.nombre" name="nombre" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Tipo documento</ion-label>
+      <ion-input placeholder="cc - nit" [(ngModel)]="datos_pagos.tip_documento" name="tip_documento" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Número documento</ion-label>
+      <ion-input clearInput type="number" placeholder="101723892" [(ngModel)]="datos_pagos.num_documento" name="num_documento" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input clearInput type="number" placeholder="310XXXXXXX" [(ngModel)]="datos_pagos.telefono" name="telefono" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Dirección</ion-label>
+      <ion-input clearInput [(ngModel)]="datos_pagos.direccion" name="direccion" required></ion-input>
+    </ion-item>
+    <br/>
+
+    <ion-title position="center">Datos producto</ion-title>
+    <br/>
+    <ion-item>
+      <ion-label position="floating">Nombre Producto</ion-label>
+      <ion-input clearInput [(ngModel)]="datos_pagos.nombre_producto" name="nombre_producto" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-input clearInput [(ngModel)]="datos_pagos.descripcion_producto" name="descripcion_producto" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">factura</ion-label>
+      <ion-input clearInput placeholder="Factura N°" [(ngModel)]="datos_pagos.factura" name="factura"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Precio Neto</ion-label>
+      <ion-input clearInput type="number" placeholder="$10000" [(ngModel)]="datos_pagos.precio_neto" name="precio_neto" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">ingrese el IVA del producto</ion-label>
+      <ion-input clearInput type="number" placeholder="19" [(ngModel)]="datos_pagos.iva" name="iva" required></ion-input>
+    </ion-item>
+    <br/>
+
+    <ion-title position="center">Información extra</ion-title>
+    <br/>
+    <ion-item>
+      <ion-label position="floating">Extra 1</ion-label>
+      <ion-input clearInput [(ngModel)]="datos_pagos.extra1" name="extra1"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Extra 2</ion-label>
+      <ion-input clearInput [(ngModel)]="datos_pagos.extra2" name="extra2"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Extra 3</ion-label>
+      <ion-input clearInput [(ngModel)]="datos_pagos.extra3" name="extra3"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label name="total">Total a pagar: <b>${{datos_pagos.precio_neto+datos_pagos.iva}}</b></ion-label>
+    </ion-item>
+    <br/>
+    <ion-title position="center">¿Datos completos? {{ formulario.valid }}</ion-title>
+    <br/>
+    <!-- <ion-button expand="block" type="submit" >pagar</ion-button> boton de prueba -->
+    <ion-button expand="block" shape="round" color="success" position="center" [disabled]="formulario.invalid" (click)="epayco()">Pagar con epayco</ion-button>
+  </form>
+  <!--<ion-button expand="block" type="submit" [disabled]="formulario.invalid">pagar</ion-button>-->
+  <br/><br/>
   <app-explore-container name="Tab 2 page"></app-explore-container>
 </ion-content>
+
+
+
